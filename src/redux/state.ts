@@ -29,15 +29,22 @@ export type RootStateType ={
 
 }
 
-
+type AddPostActionType = {
+    type: "ADD-POST",
+    postMessage: string
+}
+type ChangeNewTextActionType = {
+    type: "CHANGE-NEW-TEXT",
+    newText: string
+}
+export type ActionsTypes =  AddPostActionType | ChangeNewTextActionType
 
 export type storeType = {
     _state: RootStateType,
-    updateNewPostText: (newText: string) => void,
-    addPost:(postMessage: string) => void,
     _onChange: () => void,
     subscribe: (callback: () => void) => void,
     getState: () => RootStateType,
+    dispatch: (action: ActionsTypes) => void
   }
 
 const  store: storeType = {
@@ -67,15 +74,7 @@ const  store: storeType = {
             ],
         }
     },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._onChange()
-    },
-    addPost(postMessage: string) {
-        const newPost: postType = {id: new Date().getTime(), message: postMessage, likesCount: 0}
-        this._state.profilePage.posts.push(newPost)
-        this._onChange()
-    },
+
     _onChange() {
         console.log("State changed")
     },
@@ -86,6 +85,21 @@ const  store: storeType = {
     getState () {
         return this._state
     },
-}
+    dispatch (action) {
+        if (action.type === "ADD-POST"){
+            const newPost: postType = {
+                id: new Date().getTime(),
+                message: this._state.profilePage.newPostText ,
+                likesCount: 0}
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ""
+            this._onChange()
+        } else if(action.type === "CHANGE-NEW-TEXT"){
+            this._state.profilePage.newPostText = action.newText
+            this._onChange()
+            }
+        }
+    }
+
 
     export default store;

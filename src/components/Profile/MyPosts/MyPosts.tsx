@@ -7,13 +7,14 @@ const MyPosts = (props: ProfilePropsType) => {
     const [value, setValue] = useState("")
     let postsElements = props.posts.map( p => <Post id ={p.id} message={p.message} likesCount={p.likesCount}/>)
 
-        let addPost = () =>{
-       props.addPost(value)
+    let addPost = () =>{
+       props.dispatch({type: "ADD-POST", postMessage: props.message })
        setValue("")
     }
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) =>{
-        setValue(e.currentTarget.value)
-
+        let text = e.currentTarget.value
+        props.dispatch( {type: "CHANGE-NEW-TEXT", newText: text})
+        setValue(text)
     }
     return (
         <div className={s.postsBlock}>

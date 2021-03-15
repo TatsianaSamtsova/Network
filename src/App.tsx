@@ -8,13 +8,12 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Setting from "./components/Setting/Setting";
-import {dialogPageType, profilePageType, RootStateType} from "./redux/state";
+import {ActionsTypes, dialogPageType, profilePageType, RootStateType} from "./redux/state";
 
 export type AppPropsType ={
     dialogsPage: dialogPageType
     profilePage: profilePageType
-    addPost:(postMessage: string)=>void
-    updateNewPostText:(newText: string)=>void
+    dispatch: (action: ActionsTypes) => void
 
 }
 function App (props:AppPropsType) {
@@ -29,9 +28,8 @@ function App (props:AppPropsType) {
                     <Dialogs dialogs={props.dialogsPage.dialogs} messages={props.dialogsPage.messages}/>}/>
                 <Route path={"/profile"} render={() =>
                     <Profile posts={props.profilePage.posts}
-                             addPost={props.addPost}
-                             updateNewPostText={props.updateNewPostText}
-                    />}/>
+                             message={props.profilePage.newPostText}
+                             dispatch={props.dispatch}/>}/>
                 <Route path={"/music"} render={() => <Music />}/>
                 <Route path={"/news"} render={() => <News />}/>
                 <Route path={"/setting"} render={() => <Setting />}/>
