@@ -29,15 +29,8 @@ export type RootStateType ={
 
 }
 
-type AddPostActionType = {
-    type: "ADD-POST",
-    postMessage: string
-}
-type ChangeNewTextActionType = {
-    type: "CHANGE-NEW-TEXT",
-    newText: string
-}
-export type ActionsTypes =  AddPostActionType | ChangeNewTextActionType
+
+export type ActionsTypes =  ReturnType<typeof addPostAC>  |  ReturnType<typeof changeNewTextAC>
 
 export type storeType = {
     _state: RootStateType,
@@ -46,7 +39,12 @@ export type storeType = {
     getState: () => RootStateType,
     dispatch: (action: ActionsTypes) => void
   }
-
+export const addPostAC = (message: string) => {
+    return {type: "ADD-POST", postMessage: message } as const
+}
+export const changeNewTextAC = (text: string) => {
+    return {type: "CHANGE-NEW-TEXT", newText: text} as const
+}
 const  store: storeType = {
     _state: {
 

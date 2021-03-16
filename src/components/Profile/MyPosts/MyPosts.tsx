@@ -2,18 +2,19 @@ import React, {ChangeEvent, useState} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {ProfilePropsType} from "../Profile";
+import {addPostAC, changeNewTextAC} from "../../../redux/state";
 
 const MyPosts = (props: ProfilePropsType) => {
     const [value, setValue] = useState("")
     let postsElements = props.posts.map( p => <Post id ={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let addPost = () =>{
-       props.dispatch({type: "ADD-POST", postMessage: props.message })
+       props.dispatch(addPostAC(props.message))
        setValue("")
     }
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) =>{
         let text = e.currentTarget.value
-        props.dispatch( {type: "CHANGE-NEW-TEXT", newText: text})
+        props.dispatch( changeNewTextAC(text))
         setValue(text)
     }
     return (
