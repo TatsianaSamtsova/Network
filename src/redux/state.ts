@@ -1,3 +1,5 @@
+import profileReducer, {addPostAC, changeNewTextAC} from "./profile-reduce";
+import dialogsReducer, {sendMessageAC, updateNewMassageBodyAC} from "./dialogs-reduce";
 
 export type messageType ={
     id: number
@@ -21,6 +23,7 @@ export type profilePageType ={
 export type dialogPageType ={
     messages: Array<messageType>
     dialogs: Array<dialogType>
+    newMessageBody: string
 }
 
 export type RootStateType ={
@@ -29,8 +32,7 @@ export type RootStateType ={
 
 }
 
-
-export type ActionsTypes =  ReturnType<typeof addPostAC>  |  ReturnType<typeof changeNewTextAC>
+export type ActionsTypes =  ReturnType<typeof addPostAC>  | ReturnType<typeof sendMessageAC> | ReturnType<typeof changeNewTextAC> |    ReturnType<typeof updateNewMassageBodyAC>
 
 export type storeType = {
     _state: RootStateType,
@@ -39,12 +41,7 @@ export type storeType = {
     getState: () => RootStateType,
     dispatch: (action: ActionsTypes) => void
   }
-export const addPostAC = (message: string) => {
-    return {type: "ADD-POST", postMessage: message } as const
-}
-export const changeNewTextAC = (text: string) => {
-    return {type: "CHANGE-NEW-TEXT", newText: text} as const
-}
+
 const  store: storeType = {
     _state: {
 
@@ -70,34 +67,22 @@ const  store: storeType = {
                 {id: 5, name: "Dasha"},
                 {id: 6, name: "Igor"},
             ],
+            newMessageBody: ""
         }
     },
-
     _onChange() {
         console.log("State changed")
     },
-
     subscribe(callback) {
         this._onChange = callback
     },
-    getState () {
+    getState() {
         return this._state
     },
-    dispatch (action) {
-        if (action.type === "ADD-POST"){
-            const newPost: postType = {
-                id: new Date().getTime(),
-                message: this._state.profilePage.newPostText ,
-                likesCount: 0}
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ""
-            this._onChange()
-        } else if(action.type === "CHANGE-NEW-TEXT"){
-            this._state.profilePage.newPostText = action.newText
-            this._onChange()
-            }
-        }
-    }
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage , action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage , action)
 
-
+        this._onChange()}
+}
     export default store;

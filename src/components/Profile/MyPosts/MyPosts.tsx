@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {ProfilePropsType} from "../Profile";
-import {addPostAC, changeNewTextAC} from "../../../redux/state";
+import {addPostAC, changeNewTextAC} from "../../../redux/profile-reduce";
 
 const MyPosts = (props: ProfilePropsType) => {
     const [value, setValue] = useState("")
