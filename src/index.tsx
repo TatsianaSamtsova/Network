@@ -8,11 +8,9 @@ import store from "./redux/redux-store";
 
 
 const rerenderEntireTree = () => {
-    const state = store.getState();
     ReactDOM.render(
         <React.StrictMode>
-            <App dialogsPage={state.dialogsPage}
-                 profilePage={state.profilePage}
+            <App  store={store}
                  dispatch={store.dispatch.bind(store) }
                              />
         </React.StrictMode>,

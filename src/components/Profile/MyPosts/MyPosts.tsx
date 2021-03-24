@@ -1,20 +1,25 @@
 import React, {ChangeEvent, useState} from 'react';
+import {postType, profilePageType} from '../../../redux/state';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ProfilePropsType} from "../Profile";
-import {addPostAC, changeNewTextAC} from "../../../redux/profile-reduce";
 
-const MyPosts = (props: ProfilePropsType) => {
+export type MyPostsType = {
+    addPost: () => void
+    changeNewText: (text:string) => void
+    posts: Array<postType>
+}
+
+const MyPosts = (props:MyPostsType) => {
     const [value, setValue] = useState("")
     let postsElements = props.posts.map( p => <Post id ={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let addPost = () =>{
-       props.dispatch(addPostAC(props.message))
-       setValue("")
+      props.addPost()
+      setValue("")
     }
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) =>{
         let text = e.currentTarget.value
-        props.dispatch( changeNewTextAC(text))
+        props.changeNewText(text)
         setValue(text)
     }
     return (

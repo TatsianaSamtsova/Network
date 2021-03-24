@@ -1,4 +1,4 @@
-import {ActionsTypes, dialogPageType, dialogType, messageType} from "./state";
+import {ActionsTypes, dialogPageType} from "./state";
 
 let initialState: dialogPageType = {
     messages: [
