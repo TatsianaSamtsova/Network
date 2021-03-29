@@ -10,7 +10,7 @@ export type ProfileType = {
 const Profile = (props:ProfileType) => {
     return <div>
         <ProfileInfo/>
-        <MyPostsContainer store={props.store}/>
+        <MyPostsContainer />
     </div>
 }
 export default Profile
