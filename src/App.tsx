@@ -11,6 +11,7 @@ import Setting from "./components/Setting/Setting";
 import store, {storeType} from "./redux/state";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Store} from "redux";
+import UsersContainer from "./components/Users/UsersContainer";
 
 export type AppPropsType ={
         store: Store
@@ -32,6 +33,7 @@ function App (props:AppPropsType) {
                 <Route path={"/music"} render={() => <Music />}/>
                 <Route path={"/news"} render={() => <News />}/>
                 <Route path={"/setting"} render={() => <Setting />}/>
+                <Route path={"/users"} render={() => <UsersContainer/>}/>
             </div>
         </div>
         </BrowserRouter>
