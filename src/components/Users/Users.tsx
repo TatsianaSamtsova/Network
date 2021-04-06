@@ -13,14 +13,14 @@ type UsersPropsType = {
 }
 
 class Users extends React.Component<UsersPropsType>{
-    constructor(props: any) {
-        super(props);
+
+    componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
             this.props.setUsers(response.data.items)
         })
     }
 
-     render() {
+    render() {
             return  <div >
                 {
                     this.props.users.map( u => <div key={u.id}>
