@@ -66,3 +66,7 @@
 
     ;
 }
+
+.selectedPage {
+    font-weight: bold;
+}

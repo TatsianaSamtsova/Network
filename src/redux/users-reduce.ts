@@ -11,7 +11,10 @@ export type userType = {
 }
 
 export type usersType = {
-    users: Array<userType>
+    users: Array<userType>,
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number
 }
 
 let initialState: usersType = {
@@ -25,6 +28,10 @@ let initialState: usersType = {
         //     followed: true, fullname: "Jerry", status: "I'm a mouse", location:{city: "Kiev", country: "Ukraine" }},
 
     ],
+    pageSize: 5,
+    totalUsersCount: 1,
+    currentPage: 1
+
 
 }
 
@@ -54,7 +61,15 @@ const usersReducer = (state:usersType = initialState, action: ActionsTypes) => {
             }
         case "SET_USERS":
             return {
-                ...state, users: [ ...state.users, ...action.users]
+                ...state, users:action.users
+            }
+        case "SET_CURRENT_PAGE":
+            return {
+                ...state, currentPage: action.currentPage
+            }
+        case "SET_TOTAL_USERS_COUNT":
+            return {
+                ...state, totalUsersCount: action.totalCount
             }
 
 default:
@@ -70,5 +85,10 @@ export const unfollowAC = (userID: number) => {
 export const setUsersAC = (users: any) => {
     return {type: "SET_USERS", users} as const
 }
-
+export const setCurrentPageAC = (currentPage: number) => {
+    return {type: "SET_CURRENT_PAGE", currentPage} as const
+}
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
+    return {type: "SET_TOTAL_USERS_COUNT", totalCount: totalUsersCount} as const
+}
 export default usersReducer
