@@ -1,6 +1,13 @@
 import profileReducer, {addPostAC, changeNewTextAC} from "./profile-reduce";
 import dialogsReducer, {sendMessageAC, updateNewMassageBodyAC} from "./dialogs-reduce";
-import {followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, unfollowAC} from "./users-reduce";
+import {
+    followAC,
+    setCurrentPageAC,
+    setTotalUsersCountAC,
+    setUsersAC,
+    toggleIsFetchingAC,
+    unfollowAC
+} from "./users-reduce";
 
 export type messageType ={
     id: number
@@ -36,7 +43,8 @@ export type RootStateType ={
 export type ActionsTypes =  ReturnType<typeof addPostAC>  | ReturnType<typeof sendMessageAC> |
     ReturnType<typeof changeNewTextAC> |    ReturnType<typeof updateNewMassageBodyAC> |
     ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
-    ReturnType<typeof setCurrentPageAC> | ReturnType<typeof  setTotalUsersCountAC>
+    ReturnType<typeof setCurrentPageAC> | ReturnType<typeof  setTotalUsersCountAC> |
+    ReturnType<typeof toggleIsFetchingAC>
 
 export type storeType = {
     _state: RootStateType,
