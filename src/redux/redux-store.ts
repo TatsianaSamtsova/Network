@@ -15,4 +15,6 @@ export  type AppStateType = ReturnType<ReducersType>
 
 let store = createStore(reducers)
 
+
+
 export default store

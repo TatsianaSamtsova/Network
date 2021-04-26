@@ -1,18 +1,17 @@
 import React from "react";
 import {AppStateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {
     followAC,
     setCurrentPageAC,
     setTotalUsersCountAC,
-    setUsersAC, toggleIsFetchingAC,
+    setUsersAC,
+    toggleIsFetchingAC,
     unfollowAC,
     userType
 } from "../../redux/users-reduce";
 import axios from "axios";
 import Users from "./Users";
-import preloader from "../../assets/images/spinning-circles.svg"
 import Preloader from "../common/Preloader/Preloader";
 
 type MapStateToPropsType = {
@@ -22,15 +21,6 @@ type MapStateToPropsType = {
     currentPage: number,
     isFetching: boolean
 
-}
-
-type MapDispatchToPropsType = {
-    follow: (userID: number) => void;
-    unfollow: (userID: number) => void;
-    setUsers: (users: Array<userType>) => void;
-    setCurrentPage: (pageNumber: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) =>void;
 }
 
 type UsersContainerPropsType = {
@@ -99,30 +89,15 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        follow: (userID: number) => {
-            dispatch(followAC(userID))
-        },
-        unfollow: (userID: number) => {
-            dispatch(unfollowAC(userID))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (pageNumber: number) => {
-            dispatch(setCurrentPageAC(pageNumber))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setTotalUsersCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        },
 
-    }
-}
 
-const UserContainer = connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+const UserContainer = connect(mapStateToProps, {
+    follow: followAC,
+    unfollow: unfollowAC,
+    setUsers: setUsersAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalUsersCount: setTotalUsersCountAC,
+    toggleIsFetching: toggleIsFetchingAC
+})(UsersContainer)
 
 export default UserContainer

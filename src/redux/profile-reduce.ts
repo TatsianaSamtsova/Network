@@ -1,4 +1,5 @@
 import {ActionsTypes, postType, profilePageType} from "./state";
+import {ProfileType} from "../components/Profile/Profile";
 
 
 let initialState: profilePageType = {
@@ -7,7 +8,8 @@ let initialState: profilePageType = {
         {id: 1, message: "Hi, how are you?", likesCount: 12},
         {id: 2, message: "It's my first post.", likesCount: 11}
     ],
-    newPostText: ""
+    newPostText: "",
+    profile: {}
 }
 
 
@@ -31,7 +33,9 @@ const profileReducer = (state: profilePageType = initialState, action: ActionsTy
                 ...state,
                 newPostText: action.newText
             }
-
+        case "SET_USER_PROFILE": {
+            return {...state, profile: action.profile}
+        }
 default:
     return state
 }
@@ -42,5 +46,7 @@ export const addPostAC = () => {
 export const changeNewTextAC = (text: string) => {
     return {type: "CHANGE-NEW-TEXT", newText: text} as const
 }
-
+export const setUserProfileAC = (profile: ProfileType) => {
+    return {type: "SET_USER_PROFILE", profile} as const
+}
 export default profileReducer

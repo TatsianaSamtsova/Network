@@ -2,16 +2,15 @@ import React from 'react';
 import './App.css';
 import Header from "./components/Header/HeaderNew";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from 'react-router-dom';
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Setting from "./components/Setting/Setting";
-import store, {storeType} from "./redux/state";
+import store from "./redux/state";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Store} from "redux";
 import UserContainer from "./components/Users/UserContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 export type AppPropsType ={
         store: Store
@@ -19,6 +18,7 @@ export type AppPropsType ={
 
 }
 function App (props:AppPropsType) {
+
 
     return (
         <BrowserRouter>
@@ -28,8 +28,8 @@ function App (props:AppPropsType) {
             <div className={"app-wrapper-content"}>
                 <Route path={"/dialogs"} render={() =>
                     <DialogsContainer />}/>
-                <Route path={"/profile"} render={() =>
-                    <Profile store={store}/>}/>
+                <Route path={"/profile/:userId?"} render={() =>
+                    <ProfileContainer />}/>
                 <Route path={"/music"} render={() => <Music />}/>
                 <Route path={"/news"} render={() => <News />}/>
                 <Route path={"/setting"} render={() => <Setting />}/>
