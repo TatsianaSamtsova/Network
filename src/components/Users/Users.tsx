@@ -2,8 +2,7 @@ import React from 'react'
 import s from "./Users.module.css";
 import userPhoto from "../../assets/images/imgmen.jpg";
 import {userType} from "../../redux/users-reduce";
-import { NavLink } from 'react-router-dom';
-import axios from "axios";
+import {NavLink} from 'react-router-dom';
 import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
@@ -13,61 +12,72 @@ type UsersPropsType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    onPageChanged: (pageNumber: number) => void
+    onPageChanged: (pageNumber: number) => void,
+    toggleIsFollowing: (followingInProgress: boolean, userID: number) => void,
+    followingInProgress: number []
 
 }
 
-let Users =(props: UsersPropsType) => {
+let Users = (props: UsersPropsType) => {
 
-    let pagesCount = Math.ceil( props.totalUsersCount / props.pageSize)
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     let pages = []
-    for(let i=1; i<= pagesCount; i++)
+    for (let i = 1; i <= pagesCount; i++)
         pages.push(i)
 
-    return <div >
+    return <div>
         <div>
-            {pages.map(p =>{
-                return <span className={props.currentPage ===p ? s.selectedPage : ""}
-                             onClick = {(e)=> {props.onPageChanged(p)}}>{p}</span>
+            {pages.map(p => {
+                return <span className={props.currentPage === p ? s.selectedPage : ""}
+                             onClick={(e) => {
+                                 props.onPageChanged(p)
+                             }}>{p}</span>
 
             })}
 
         </div>
         {
-            props.users.map( u => <div key={u.id}>
+            props.users.map(u => <div key={u.id}>
                     <div className={s.user}>
                 <span>
                     <div>
                         <NavLink to={'/profile/' + u.id}>
-                        <img src={u.photos.small != null ? u.photos.small : userPhoto } className={s.userPhoto}  />
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.userPhoto}/>
                          </NavLink>
                     </div>
-                    <div className={s.buttons} >
+                    <div className={s.buttons}>
                         {u.followed
-                            ? <button className={s.button} onClick={()=>{
-                               followAPI.unfollow(u.id).then(data => {
-                                        if (data.resultCode == 0){
-                                            props.unfollow(u.id)
-                                        }
-                                    })
+                            ? <button className={s.button}
+                                      disabled={props.followingInProgress.some(id => id === u.id)}
+                                      onClick={() => {
+                                          props.toggleIsFollowing(true, u.id);
+                                          followAPI.unfollow(u.id).then(data => {
+                                              if (data.resultCode == 0) {
+                                                  props.unfollow(u.id)
+                                              }
+                                              props.toggleIsFollowing(false, u.id);
+                                          })
 
 
-                            }}> Unfollow</button>
-                            : <button className={s.button} onClick={()=>{
+                                      }}> Unfollow</button>
+                            : <button className={s.button}
+                                      disabled={props.followingInProgress.some(id => id === u.id)}
+                                      onClick={() => {
+                                          props.toggleIsFollowing(true, u.id);
+                                          followAPI.follow(u.id).then(data => {
+                                              if (data.resultCode == 0) {
+                                                  props.follow(u.id)
+                                              }
+                                              props.toggleIsFollowing(false, u.id);
+                                          })
 
-                                followAPI.follow(u.id).then(data => {
-                                    if (data.resultCode == 0){
-                                        props.follow(u.id)
-                                    }
-                                })
-
-                            }}> Follow</button>
+                                      }}> Follow</button>
                         }
 
                     </div>
                 </span>
-                        <span className={s.userInfo} >
+                        <span className={s.userInfo}>
                     <span className={s.text}>
                         <div>{u.name}</div>
                         <div>{u.status}</div>

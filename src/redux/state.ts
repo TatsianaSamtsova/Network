@@ -5,7 +5,7 @@ import {
     setCurrentPageAC,
     setTotalUsersCountAC,
     setUsersAC,
-    toggleIsFetchingAC,
+    toggleIsFetchingAC, toggleIsFollowingAC,
     unfollowAC
 } from "./users-reduce";
 import { setUserDataAC } from "./auth-reducer";
@@ -48,7 +48,7 @@ export type ActionsTypes =  ReturnType<typeof addPostAC>  | ReturnType<typeof se
     ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> | ReturnType<typeof  setTotalUsersCountAC> |
     ReturnType<typeof toggleIsFetchingAC> | ReturnType<typeof setUserProfileAC> |
-    ReturnType<typeof setUserDataAC>
+    ReturnType<typeof setUserDataAC> | ReturnType<typeof toggleIsFollowingAC>
 
 export type storeType = {
     _state: RootStateType,
