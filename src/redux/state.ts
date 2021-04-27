@@ -1,12 +1,12 @@
 import profileReducer, {addPostAC, changeNewTextAC, setUserProfileAC} from "./profile-reduce";
 import dialogsReducer, {sendMessageAC, updateNewMassageBodyAC} from "./dialogs-reduce";
 import {
-    followAC,
+    followSuccessAC,
     setCurrentPageAC,
     setTotalUsersCountAC,
     setUsersAC,
     toggleIsFetchingAC, toggleIsFollowingAC,
-    unfollowAC
+    unfollowSuccessAC
 } from "./users-reduce";
 import { setUserDataAC } from "./auth-reducer";
 
@@ -45,7 +45,7 @@ export type RootStateType ={
 
 export type ActionsTypes =  ReturnType<typeof addPostAC>  | ReturnType<typeof sendMessageAC> |
     ReturnType<typeof changeNewTextAC> |    ReturnType<typeof updateNewMassageBodyAC> |
-    ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
+    ReturnType<typeof followSuccessAC> | ReturnType<typeof unfollowSuccessAC> | ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> | ReturnType<typeof  setTotalUsersCountAC> |
     ReturnType<typeof toggleIsFetchingAC> | ReturnType<typeof setUserProfileAC> |
     ReturnType<typeof setUserDataAC> | ReturnType<typeof toggleIsFollowingAC>

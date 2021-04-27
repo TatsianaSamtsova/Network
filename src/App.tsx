@@ -32,7 +32,7 @@ function App (props:AppPropsType) {
                 <Route path={"/music"} render={() => <Music />}/>
                 <Route path={"/news"} render={() => <News />}/>
                 <Route path={"/setting"} render={() => <Setting />}/>
-                <Route path={"/users"} render={() => <UserContainer/>}/>
+                <Route path={"/users"} render={() => <UserContainer />}/>
             </div>
         </div>
         </BrowserRouter>

@@ -1,5 +1,8 @@
 import {ActionsTypes, postType, profilePageType} from "./state";
 import {ProfileType} from "../components/Profile/Profile";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
+import {setUsersAC} from "./users-reduce";
 
 
 let initialState: profilePageType = {
@@ -48,5 +51,14 @@ export const changeNewTextAC = (text: string) => {
 }
 export const setUserProfileAC = (profile: ProfileType) => {
     return {type: "SET_USER_PROFILE", profile} as const
+}
+export const getProfile = (userId: string) => {
+
+    return (dispatch: Dispatch) => {
+        profileAPI.getProfile(userId).then(data => {
+            dispatch(setUserProfileAC(data))
+        })
+
+    }
 }
 export default profileReducer

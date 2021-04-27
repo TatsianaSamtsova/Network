@@ -1,4 +1,6 @@
 import {ActionsTypes} from "./state";
+import {followAPI, profileAPI, userAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 export type userType = {
 
@@ -91,10 +93,10 @@ default:
     return state
 }
 }
-export const followAC = (userID: number) => {
+export const followSuccessAC = (userID: number) => {
     return {type: "FOLLOW", userID} as const
 }
-export const unfollowAC = (userID: number) => {
+export const unfollowSuccessAC = (userID: number) => {
     return {type: "UNFOLLOW",userID} as const
 }
 export const setUsersAC = (users: any) => {
@@ -112,4 +114,46 @@ export const toggleIsFetchingAC = (isFetching: boolean) => {
 export const toggleIsFollowingAC = (followingInProgress: boolean, userId: number) => {
     return {type: "TOGGLE_IS_FOLLOWING_PROGRESS", followingInProgress, userId} as const
 }
+
+export const getUsersThunkCreator = (currentPage: number,pageSize: number) => {
+
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFetchingAC(true))
+
+        userAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetchingAC(false))
+            dispatch(setUsersAC(data.items))
+            dispatch(setTotalUsersCountAC(data.totalCount));
+        })
+    }
+}
+
+export const follow = (userId: number) => {
+
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFollowingAC(true,userId));
+        followAPI.follow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(followSuccessAC(userId))
+            }
+            dispatch(toggleIsFollowingAC(false, userId));
+        })
+    }
+}
+export const unfollow = (userId: number) => {
+
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFollowingAC(true,userId));
+        followAPI.unfollow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unfollowSuccessAC(userId))
+            }
+            dispatch(toggleIsFollowingAC(false, userId));
+        })
+
+        }
+}
+
 export default usersReducer
