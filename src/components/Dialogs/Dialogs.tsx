@@ -3,6 +3,7 @@ import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {dialogType, messageType,} from "../../redux/state";
+import { Redirect } from 'react-router-dom';
 
 type DialogsPropsType = {
     updateNewMassageBody:(body:string)=> void
@@ -10,6 +11,7 @@ type DialogsPropsType = {
     messages: Array<messageType>
     dialogs: Array<dialogType>
     newMessageBody: string
+    isAuth: boolean
 
 }
 
@@ -27,6 +29,8 @@ const Dialogs =(props:DialogsPropsType) => {
        let body = e.currentTarget.value
        props.updateNewMassageBody(body)
     }
+
+
    return (
        <div className={s.dialogs}>
            <div className={s.dialogsItem}>

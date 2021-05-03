@@ -10,6 +10,7 @@ import {Store} from "redux";
 import UserContainer from "./components/Users/UserContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/login/Login";
 
 export type AppPropsType ={
         store: Store
@@ -33,6 +34,7 @@ function App (props:AppPropsType) {
                 <Route path={"/news"} render={() => <News />}/>
                 <Route path={"/setting"} render={() => <Setting />}/>
                 <Route path={"/users"} render={() => <UserContainer />}/>
+                <Route path={"/login"} render={() => <Login />}/>
             </div>
         </div>
         </BrowserRouter>
