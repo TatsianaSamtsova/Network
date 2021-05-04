@@ -1,4 +1,4 @@
-import profileReducer, {addPostAC, changeNewTextAC, setUserProfileAC} from "./profile-reduce";
+import profileReducer, {addPostAC, changeNewTextAC, setStatusAC, setUserProfileAC} from "./profile-reduce";
 import dialogsReducer, {sendMessageAC, updateNewMassageBodyAC} from "./dialogs-reduce";
 import {
     followSuccessAC,
@@ -27,7 +27,8 @@ export type postType ={
 export type profilePageType ={
     posts: Array<postType>
     newPostText: string
-    profile: any
+    profile: any,
+    status: string
 
 
 }
@@ -48,7 +49,8 @@ export type ActionsTypes =  ReturnType<typeof addPostAC>  | ReturnType<typeof se
     ReturnType<typeof followSuccessAC> | ReturnType<typeof unfollowSuccessAC> | ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> | ReturnType<typeof  setTotalUsersCountAC> |
     ReturnType<typeof toggleIsFetchingAC> | ReturnType<typeof setUserProfileAC> |
-    ReturnType<typeof setUserDataAC> | ReturnType<typeof toggleIsFollowingAC>
+    ReturnType<typeof setUserDataAC> | ReturnType<typeof toggleIsFollowingAC> |
+    ReturnType<typeof setStatusAC>
 
 export type storeType = {
     _state: RootStateType,
@@ -68,7 +70,8 @@ const  store: storeType = {
                 {id: 2, message: "It's my first post.", likesCount: 11}
             ],
             newPostText: "",
-            profile: null
+            profile: null,
+            status: ""
         },
         dialogsPage: {
             messages: [
